@@ -23,9 +23,8 @@ export function SignIn(){
         const data = {
             email, password
         };
+
         const response = await api.get('api/Usuarios/listar');
-        alert(response.data)
-        return false;
         
         try {
 
