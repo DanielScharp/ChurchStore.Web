@@ -11,8 +11,9 @@ import { Helmet } from 'react-helmet-async'
 
 
 export function SignIn(){
+
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [senha, setSenha] = useState('');
 
     const navigate = useNavigate();
 
@@ -21,17 +22,15 @@ export function SignIn(){
         event.preventDefault();
 
         const data = {
-            email, password
+            email, senha
         };
 
-        const response = await api.get('api/Usuarios/listar');
+        const response = await api.post('api/login', data);
         
         try {
-
             localStorage.setItem('email', email);
             localStorage.setItem('token', response.data)
-
-            navigate('/Dashboard')
+            navigate('/')
         }
         catch(error) {
             alert('login falhou' + (error))
@@ -44,10 +43,10 @@ export function SignIn(){
             <div className='p-8'>
                 <Button variant="ghost" asChild className='absolute right-8 top-8'>
                     <Link to="/sign-up">
-                        Novo estabelecimento
+                        Cadastrar
                     </Link>
                 </Button>
-                <div className='w-[350px] flex flex-col justify-center gap-6'>
+                <div className='w-[350px] mb-3 flex flex-col justify-center gap-6'>
                     <div className='flex flex-col gap-2 text-center'>
                         <h1 className='text-2xl font-semibold tracking-tight'>
                             Acessar painel
@@ -68,12 +67,12 @@ export function SignIn(){
                         />
                     </div>
                     <div className='space-y-2'>
-                        <Label htmlFor='password'>Sua senha</Label>
+                        <Label htmlFor='senha'>Sua senha</Label>
                         <Input 
-                            id='password' 
-                            type='password'
-                            value={password}
-                            onChange={e=>setPassword(e.target.value)}
+                            id='senha' 
+                            type='senha'
+                            value={senha}
+                            onChange={e=>setSenha(e.target.value)}
                         />
                     </div>
 

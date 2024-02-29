@@ -2,11 +2,38 @@ import { Button } from '@/components/ui/button'
 
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { api } from '@/services/api'
+import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 export function SignUp(){
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+
+    const navigate = useNavigate();
+
+    async function cadastar(event: React.FormEvent<HTMLFormElement>) {
+
+        event.preventDefault();
+
+        const data = {
+            nome, email, senha
+        };
+
+        const response = await api.post('api/cadastrar', data);
+        
+        try {
+            localStorage.setItem('email', email);
+            navigate('/sign-in')
+        }
+        catch(error) {
+            alert('login falhou' + (error))
+        }
+    }
+
     return(
         <>
             <Helmet title='Cadastro' />
@@ -26,21 +53,33 @@ export function SignUp(){
                         </p>
                     </div>
                 </div>
-                <form className='space-y-4'>
+                <form onSubmit={cadastar} className='space-y-4'>
                     <div className='space-y-2'>
-                        <Label htmlFor='managerName'>Nome completo</Label>
+                        <Label htmlFor='nome'>Nome completo</Label>
                         <Input 
-                            id='managerName' 
+                            id='nome' 
                             type='text' 
+                            value={nome}
+                            onChange={e=>setNome(e.target.value)}
                         />
                     </div>
                     <div className='space-y-2'>
                         <Label htmlFor='email'>Seu e-mail</Label>
-                        <Input id='email' type='email' />
+                        <Input
+                            id='email' 
+                            type='email' 
+                            value={email}
+                            onChange={e=>setEmail(e.target.value)}
+                        />
                     </div>
                     <div className='space-y-2'>
-                        <Label htmlFor='phone'>Seu celular</Label>
-                        <Input id='phone' type='tel' />
+                        <Label htmlFor='senha'>Seu celular</Label>
+                        <Input 
+                            id='senha' 
+                            type='password' 
+                            value={senha}
+                            onChange={e=>setSenha(e.target.value)}
+                        />
                     </div>
 
                     <Button type='submit' className='w-full'>
