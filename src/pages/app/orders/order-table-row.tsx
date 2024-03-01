@@ -12,6 +12,7 @@ export interface OrderTableRowProps {
     order: {
         pedidoId: number
         clienteId: number
+        clienteNome: string
         statusNome: 'Pendente' | 'Aprovado' | 'Cancelado' 
         pedidoData: string
         pedidoValor: number
@@ -48,7 +49,7 @@ export function OrderTableRow({ order }: OrderTableRowProps){
                 <OrderStatus status={order.statusNome} />
             </TableCell>
             <TableCell className="font-mediu">
-                {order.clienteId}
+                {order.clienteNome}
             </TableCell>
             <TableCell className="font-medium">
                 {order.pedidoValor.toLocaleString('pt-BR', {

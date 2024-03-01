@@ -6,6 +6,7 @@ import { SignUp } from "./pages/auth/sign-up";
 import { Orders } from "./pages/app/orders/orders";
 import { Dashboard } from "./pages/app/dashboard/dashboard";
 import { NotFound } from "./pages/404";
+import { Buy } from "./pages/app/buys/buy";
 
 export const router = createBrowserRouter([
 
@@ -24,6 +25,12 @@ export const router = createBrowserRouter([
         children: [
             {path: '/sign-in', element: <SignIn />},
             {path: '/sign-up', element: <SignUp />},
+        ]
+    },
+    {
+        path: '/',
+        children: [
+            {path: '/buy', element: <Buy />},
         ]
     }
 ])
