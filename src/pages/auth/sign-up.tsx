@@ -12,6 +12,7 @@ export function SignUp(){
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [senhaConfirma, setSenhaConfirma] = useState('');
 
     const navigate = useNavigate();
 
@@ -19,14 +20,27 @@ export function SignUp(){
 
         event.preventDefault();
 
+        if(nome.length > 45){
+            alert("O seu nome é muito grande! Por gentileza, reduza para no máximo 45 caracteres.")
+            return false;
+        }
+        if(email.length > 45){
+            alert("O seu email é muito grande! Por gentileza, reduza para no máximo 45 caracteres.")
+            return false;
+        }
+        if(senha != senhaConfirma){
+            alert("As senhas não conferem.")
+            return false;
+        }
+        
+        
         const data = {
             nome, email, senha
         };
-
-        const response = await api.post('api/usuarios/cadastrar', data);
-        alert(response)
         
         try {
+            await api.post('api/usuarios/cadastrar', data);
+            
             navigate('/sign-in')
         }
         catch(error) {
@@ -79,6 +93,15 @@ export function SignUp(){
                             type='password' 
                             value={senha}
                             onChange={e=>setSenha(e.target.value)}
+                        />
+                    </div>
+                    <div className='space-y-2'>
+                        <Label htmlFor='senha'>Confirme sua senha</Label>
+                        <Input 
+                            id='senhaConfirma' 
+                            type='password' 
+                            value={senhaConfirma}
+                            onChange={e=>setSenhaConfirma(e.target.value)}
                         />
                     </div>
 

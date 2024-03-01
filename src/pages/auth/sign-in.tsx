@@ -24,10 +24,10 @@ export function SignIn(){
         const data = {
             email, senha
         };
-
-        const response = await api.post('api/login', data);
         
         try {
+            const response = await api.post('api/login', data);
+
             localStorage.setItem('email', email);
             localStorage.setItem('token', response.data)
             navigate('/')
@@ -70,7 +70,7 @@ export function SignIn(){
                         <Label htmlFor='senha'>Sua senha</Label>
                         <Input 
                             id='senha' 
-                            type='senha'
+                            type='password'
                             value={senha}
                             onChange={e=>setSenha(e.target.value)}
                         />

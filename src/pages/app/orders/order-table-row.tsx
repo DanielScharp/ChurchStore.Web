@@ -4,7 +4,23 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { ArrowRight, Search, X } from "lucide-react";
 import { OrderDetails } from "./order-datails";
 
-export function OrderTableRow(){
+import { formatDistanceToNow } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { OrderStatus } from "@/components/order-status";
+
+export interface OrderTableRowProps {
+    order: {
+        pedidoId: number
+        clienteId: number
+        statusNome: 'Pendente' | 'Aprovado' | 'Cancelado' 
+        pedidoData: string
+        pedidoValor: number
+    }
+}
+
+export function OrderTableRow({ order }: OrderTableRowProps){
+
+
     return(
         <TableRow>
             <TableCell>
@@ -20,22 +36,25 @@ export function OrderTableRow(){
             </TableCell>
             
             <TableCell className="font-mono text-xs font-medium">
-                12312
+                {order.pedidoId}
             </TableCell>
             <TableCell className="text-muted-foreground">
-                há 15minutos
+                {formatDistanceToNow(order.pedidoData, {
+                    locale: ptBR,
+                    addSuffix: true
+                })}
             </TableCell>
             <TableCell>
-                <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-slate-400" />
-                    <span className="font-medium text-muted-foreground">Pendente</span>
-                </div>
+                <OrderStatus status={order.statusNome} />
             </TableCell>
             <TableCell className="font-mediu">
-                Daniel
+                {order.clienteId}
             </TableCell>
             <TableCell className="font-medium">
-                R$ 149,90
+                {order.pedidoValor.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                })}
             </TableCell>
             <TableCell>
                 <Button variant="outline" size="xs">

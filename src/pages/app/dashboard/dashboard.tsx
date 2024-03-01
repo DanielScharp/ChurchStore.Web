@@ -1,3 +1,5 @@
+import { api } from '@/services/api'
+
 import { Helmet } from 'react-helmet-async'
 import { MonthRevenueCard } from './month-revenue-card'
 import { MonthOrdersAmountCard } from './month-orders-amount-card'
@@ -5,9 +7,24 @@ import { DayOrdersAmountCard } from './day-orders-amount-card'
 import { MonthCanceledOrdersAmountCard } from './mounth-canceled-orders-amount-card'
 import { RevenueChart } from './revenue-chart'
 import { PopularProductsChart } from './popular-products-chart'
+import { useEffect } from 'react'
 
 
 export function Dashboard(){
+
+    const email = localStorage.getItem('email');
+    const token = localStorage.getItem('token');
+
+    const authorization = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    useEffect(()=> {
+        api.get('')
+    })
+
     return(
         <>
             <Helmet title='Dashboard' />

@@ -3,8 +3,35 @@ import { Helmet } from "react-helmet-async";
 import { OrderTableRow } from "./order-table-row";
 import { OrderTableFilters } from "./order-table-filters";
 import { Pagination } from "@/components/pagination";
+import { useEffect, useState } from "react";
+import { api } from "@/services/api";
 
 export function Orders() {
+
+    
+    const [pedidos, setPedidos] = useState([]);
+
+    const email = localStorage.getItem('email');
+    const token = localStorage.getItem('token');
+
+    const authorization = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    useEffect(() => {
+        api.get('api/Pedidos/Listar', authorization).then(
+            response => {
+                setPedidos(response.data);
+            }
+        ).catch(error => {
+            // Tratar o erro, se necessário
+            console.error('Erro ao buscar pedidos:', error);
+        });
+    }, []);
+
+
     return (
         <>
             <Helmet title="Pedidos" />
@@ -27,9 +54,11 @@ export function Orders() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {Array.from({ length: 10 }).map((_, i) => {
-                                    return <OrderTableRow key={i} />
-                                })}
+                                {
+                                    pedidos.map(pedido => (
+                                        <OrderTableRow key={pedido} order={pedido} />
+                                    ))
+                                }
                             </TableBody>
                         </Table>
                     </div>
