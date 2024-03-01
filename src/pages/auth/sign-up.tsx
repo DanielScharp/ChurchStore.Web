@@ -23,14 +23,14 @@ export function SignUp(){
             nome, email, senha
         };
 
-        const response = await api.post('api/cadastrar', data);
+        const response = await api.post('api/usuarios/cadastrar', data);
+        alert(response)
         
         try {
-            localStorage.setItem('email', email);
             navigate('/sign-in')
         }
         catch(error) {
-            alert('login falhou' + (error))
+            alert('o cadastro falhou ' + (error))
         }
     }
 
@@ -73,7 +73,7 @@ export function SignUp(){
                         />
                     </div>
                     <div className='space-y-2'>
-                        <Label htmlFor='senha'>Seu celular</Label>
+                        <Label htmlFor='senha'>Sua senha</Label>
                         <Input 
                             id='senha' 
                             type='password' 
