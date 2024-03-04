@@ -1,21 +1,19 @@
-import { TestTube } from "lucide-react"
-
 export interface ProductProps {
-    teste: {
-        produtoId: number
-        ProdutoNome: string
-        ProdutoValor: number
-        Qauntidade: number 
+    produto: {
+        produtoId: number;
+        produtoNome: string;
+        produtoValor: number;
+        quantidade: number;
     }
 }
 
 
-export function Product({ teste }: ProductProps) {
+export function Product({ produto }: ProductProps) {
     return (
         <div className="w-[100px] bg-emerald-600">
-            <h1>{teste.ProdutoNome}</h1>
-            <div className="">
-                {teste.ProdutoValor.toLocaleString('pt-BR', {
+            <h1>{produto.produtoNome}</h1>
+            <div>
+            {produto.produtoValor.toLocaleString('pt-BR', {
                     style: 'currency',
                     currency: 'BRL'
                 })}
