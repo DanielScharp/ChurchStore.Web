@@ -1,8 +1,17 @@
 import { Building, ChevronDown, LogOut } from "lucide-react";
 import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { useNavigate } from "react-router-dom";
 
 export function AccountMenu(){
+    const navigate = useNavigate();
+
+    async function Disconnect() {
+        localStorage.removeItem('token')
+        localStorage.removeItem('email')
+
+        navigate('/sign-in')
+    }
 
     return (
         <DropdownMenu>
@@ -24,7 +33,7 @@ export function AccountMenu(){
                 </DropdownMenuItem>
                 <DropdownMenuItem className="text-rose-500 dark:text-rose-400">
                     <LogOut className="mr-2 h-4 w-4" />
-                    <span>Sair</span>
+                    <span onClick={Disconnect}>Sair</span>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
