@@ -7,7 +7,7 @@ import { Orders } from "./pages/app/orders/orders";
 import { Dashboard } from "./pages/app/dashboard/dashboard";
 import { NotFound } from "./pages/404";
 import { Buy } from "./pages/app/buys/buy";
-import { ClientHeaderLayout } from "./pages/_layouts/clientHeader";
+import { ClientHeaderLayout } from "./pages/_layouts/client-header";
 import { Bag } from "./pages/app/bag/bag";
 
 export const router = createBrowserRouter([

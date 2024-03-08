@@ -1,4 +1,4 @@
-import { ClientHeader } from "@/components/clientHeadet"
+import { ClientHeader } from "@/components/client-header"
 import { Outlet } from "react-router-dom"
 
 export function ClientHeaderLayout() {
