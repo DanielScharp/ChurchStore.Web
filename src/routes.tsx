@@ -9,6 +9,7 @@ import { NotFound } from "./pages/404";
 import { Buy } from "./pages/app/buys/buy";
 import { ClientHeaderLayout } from "./pages/_layouts/client-header";
 import { Bag } from "./pages/app/bag/bag";
+import { AddProduct } from "./pages/app/products/add-product";
 
 export const router = createBrowserRouter([
 
@@ -27,6 +28,7 @@ export const router = createBrowserRouter([
         children: [
             {path: '/dashboard', element: <Dashboard />},
             {path: '/orders', element: <Orders />},
+            {path: '/add/product', element: <AddProduct />},
         ]
     },
     {

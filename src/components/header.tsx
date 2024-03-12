@@ -1,4 +1,4 @@
-import { Home, UtensilsCrossed , ShoppingBag } from "lucide-react";
+import { Home, UtensilsCrossed , ShoppingBag, BarChartIcon, BookText } from "lucide-react";
 
 import { NavLink } from "./nav-link";
 import { Separator } from "./ui/separator";
@@ -21,6 +21,14 @@ export function Header(){
                     <NavLink to="/orders">
                         <UtensilsCrossed className="h-4 w-4" />
                         Pedidos
+                    </NavLink>
+                    <NavLink to="/dashboard">
+                        <BarChartIcon className="h-4 w-4" />
+                        Dashboard
+                    </NavLink>
+                    <NavLink to="/add/product">
+                        <BookText className="h-4 w-4" />
+                        Produtos
                     </NavLink>
                 </nav>
 
