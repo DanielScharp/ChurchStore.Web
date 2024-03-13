@@ -1,11 +1,16 @@
+import { EditProduct } from "@/pages/app/products/edit-product";
+import { PencilLine } from "lucide-react";
+import { Button } from "./ui/button";
+import { Dialog, DialogTrigger } from "./ui/dialog";
 
 export interface ProductProps {
     produto: {
         produtoId: number;
         produtoNome: string;
-        produtoValor: number;
+        produtoValor: string;
         quantidade: number;
         imagemUrl: string;
+        exibir: boolean;
     }
 }
 
@@ -22,13 +27,24 @@ export function AdminProduct({ produto }: ProductProps) {
                         {produto.produtoNome}
                     </h1>
                     <div className="text-lg font-semibold text-zinc-500 dark:text-zinc-400 ">
-                        {produto.produtoValor.toLocaleString('pt-BR', {
+                        {parseFloat(produto.produtoValor).toLocaleString('pt-BR', {
                             style: 'currency',
                             currency: 'BRL'
                         })}
                     </div>
-                    <div className="w-full flex-none text-sm font-medium text-zinc-500 dark:text-zinc-400 mt-2">
+                    <div className="w-5/6 flex items-center text-sm font-medium text-zinc-500 dark:text-zinc-400 mt-2">
                         Quantidade disponível {produto.quantidade}
+                    </div>
+                    <div className="w-1/6 flex justify-end text-zinc-500 dark:text-zinc-400 mt-2">
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button variant="outline" size="xs" >
+                                    <PencilLine className="h-3 w-3" />
+                                    <span className="sr-only">Detalhes do pedido</span>
+                                </Button>
+                            </DialogTrigger>
+                            <EditProduct produto={produto} />
+                        </Dialog>
                     </div>
                 </div>
             </div>

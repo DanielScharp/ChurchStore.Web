@@ -7,10 +7,10 @@ import { useEffect, useState } from "react";
 interface Produto {
     produtoId: number;
     produtoNome: string;
-    produtoValor: number;
+    produtoValor: string;
     quantidade: number;
     imagemUrl: string;
-
+    exibir: boolean;
 }
 
 export function AddProduct() {
@@ -19,12 +19,14 @@ export function AddProduct() {
     const [newProduct, setNewProduct] = useState<Produto>({ 
         produtoId: 0, 
         produtoNome: '', 
-        produtoValor: 0, 
+        produtoValor: '', 
         quantidade: 0, 
-        imagemUrl: '' 
+        imagemUrl: '',
+        exibir: false
+        
     });
     useEffect(() => {
-        api.get('api/Produtos/Listar').then(
+        api.get('api/Produtos/Listar?publico=false').then(
             response => {
                 setProdutos(response.data);
             }
@@ -34,7 +36,9 @@ export function AddProduct() {
     }, []);
 
     function addProduct(){
-        api.post('api/Produtos/adicionar', newProduct).then(
+        const produto = { ...newProduct, produtoValor: parseFloat(newProduct.produtoValor.toString().replace(',', '.')) };
+
+        api.post('api/Produtos/adicionar', produto).then(
             response => {
                 setProdutos([...produtos, response.data]);
             }
@@ -45,7 +49,7 @@ export function AddProduct() {
 
     return(
         <>
-            <div  className="w-full grid grid-cols-5 p-4 rounded-md gap-4 bg-zinc-800">
+            <div  className="w-full sticky top-0 z-10 grid grid-cols-5 p-4 rounded-md gap-4 border-2 dark:border-zinc-950  bg-zinc-100 dark:bg-zinc-800 ">
                 <Input 
                     id="productname" 
                     value={newProduct?.produtoNome}
@@ -63,7 +67,7 @@ export function AddProduct() {
                 <Input 
                     id="value" 
                     value={newProduct?.produtoValor}
-                    onChange={(e) => setNewProduct({ ...newProduct, produtoValor:parseInt(e.target.value) || 0 })}
+                    onChange={(e) => setNewProduct({ ...newProduct, produtoValor: e.target.value})}
                     placeholder="Valor" 
                     className="h-8"
                 />

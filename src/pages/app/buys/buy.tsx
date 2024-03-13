@@ -16,7 +16,7 @@ export function Buy() {
     const [produtos, setProdutos] = useState<Produto[]>([]);
     
     useEffect(() => {
-        api.get('api/Produtos/Listar').then(
+        api.get('api/Produtos/Listar?publico=true').then(
             response => {
                 setProdutos(response.data);
             }
