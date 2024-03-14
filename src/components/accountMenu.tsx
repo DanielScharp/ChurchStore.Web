@@ -31,9 +31,9 @@ export function AccountMenu(){
                     <Building className="w-4 h-4 mr-2" />
                     <span>Perfil da loja</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="text-rose-500 dark:text-rose-400">
+                <DropdownMenuItem className="text-rose-500 dark:text-rose-400 cursor-pointer" onClick={Disconnect}>
                     <LogOut className="mr-2 h-4 w-4" />
-                    <span onClick={Disconnect}>Sair</span>
+                    <span>Sair</span>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

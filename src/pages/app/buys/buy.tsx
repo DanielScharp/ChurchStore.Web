@@ -26,7 +26,7 @@ export function Buy() {
     }, []);
 
     return(
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
             {
                 produtos.map(produto => (
                     <Product key={produto.produtoId} produto={produto} />

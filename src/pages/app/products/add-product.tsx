@@ -59,7 +59,6 @@ export function AddProduct() {
                 />
                 <Input 
                     id="quantity" 
-                    value={newProduct?.quantidade}
                     onChange={(e) => setNewProduct({ ...newProduct, quantidade:parseInt(e.target.value) || 0 })}
                     placeholder="Quantidade disponível" 
                     className="h-8"
