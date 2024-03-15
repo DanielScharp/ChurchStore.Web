@@ -1,4 +1,4 @@
-import { ShoppingBag } from "lucide-react";
+import { Home, ShoppingBag } from "lucide-react";
 import { NavLink } from "./nav-link";
 
 import { Separator } from "./ui/separator";
@@ -9,11 +9,15 @@ export function ClientHeader(){
     return (
         <div className="border-b">
             <div className="flex h-16 items-center gap-6 px-6">
-                <NavLink to="/">
+                <NavLink to="/bag">
                     <ShoppingBag className="h-6 w-6" />
                 </NavLink>
 
                 <Separator orientation="vertical" className="h-6" />
+                <NavLink to="/">
+                    <Home className="h-6 w-6" />
+                    Início
+                </NavLink>
 
                 <div className="ml-auto flex items-center gap-2">
                     <ThemeToggle />

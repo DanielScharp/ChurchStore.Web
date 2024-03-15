@@ -3,8 +3,8 @@ import { api } from "@/services/api";
 import { useEffect, useState } from "react";
 
 interface ProductItem {
-    itemId: number;
     pedidoId: number;
+    produtoId: number;
     clienteId: number;
     produtoValor: number;
     quantidade: number;
@@ -30,12 +30,14 @@ export function Bag() {
     }, []);
 
     return(
-        <div className="grid grid-cols-2 gap-8">
-            {
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {produtos.length === 0 ? (
+                <p>O carrinho está vazio</p>
+            ) : (
                 produtos.map(produto => (
-                    <BagProduct key={produto.itemId} produto={produto} />
+                    <BagProduct key={produto.produtoId} produto={produto} />
                 ))
-            }
+            )}
         </div>
     )
 }
