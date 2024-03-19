@@ -1,15 +1,6 @@
+import { ProductProps } from "@/pages/app/buys/buy";
 import { api } from "@/services/api";
 import { useState } from "react";
-
-export interface ProductProps {
-    produto: {
-        produtoId: number;
-        produtoNome: string;
-        produtoValor: number;
-        quantidade: number;
-        imagemUrl: string;
-    }
-}
 
 export function Product({ produto }: ProductProps) {
 

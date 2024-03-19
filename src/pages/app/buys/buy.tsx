@@ -2,18 +2,19 @@ import { Product } from "@/components/product";
 import { api } from "@/services/api";
 import { useEffect, useState } from "react";
 
-interface Produto {
-    produtoId: number;
-    produtoNome: string;
-    produtoValor: number;
-    quantidade: number;
-    imagemUrl: string;
-
+export interface ProductProps {
+    produto: {
+        produtoId: number;
+        produtoNome: string;
+        produtoValor: number;
+        quantidade: number;
+        imagemUrl: string;
+    }
 }
 
 export function Buy() {
 
-    const [produtos, setProdutos] = useState<Produto[]>([]);
+    const [produtos, setProdutos] = useState<ProductProps['produto'][]>([]);
     
     useEffect(() => {
         api.get('api/Produtos/Listar?publico=true').then(

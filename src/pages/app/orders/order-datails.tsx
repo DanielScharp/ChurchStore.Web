@@ -1,3 +1,4 @@
+import { OrderStatus } from '@/components/order-status'
 import {
     DialogContent,
     DialogDescription,
@@ -13,12 +14,16 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
+import { formatDistanceToNow } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { OrderTableRowProps } from './order-table-row'
 
-export function OrderDetails() {
+export function OrderDetails({order}: OrderTableRowProps) {
+
 return (
     <DialogContent>
     <DialogHeader>
-        <DialogTitle>Pedido: 1827fy2827d6h</DialogTitle>
+        <DialogTitle>Pedido: {order.pedidoId}</DialogTitle>
         <DialogDescription>Detalhes do pedido</DialogDescription>
     </DialogHeader>
 
@@ -29,17 +34,14 @@ return (
             <TableCell className="text-muted-foreground">Status</TableCell>
             <TableCell className="flex justify-end">
                 <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-slate-400" />
-                <span className="font-medium text-muted-foreground">
-                    Pendente
-                </span>
+                    <OrderStatus status={order.statusNome} />
                 </div>
             </TableCell>
             </TableRow>
             <TableRow>
             <TableCell className="text-muted-foreground">Cliente</TableCell>
             <TableCell className="flex justify-end">
-                Diego Schell Fernandes
+                {order.clienteNome}
             </TableCell>
             </TableRow>
             <TableRow>
@@ -58,7 +60,12 @@ return (
             <TableCell className="text-muted-foreground">
                 Realizado há
             </TableCell>
-            <TableCell className="flex justify-end">há 3 minutos</TableCell>
+            <TableCell className="flex justify-end">
+                {formatDistanceToNow(order.pedidoData, {
+                    locale: ptBR,
+                    addSuffix: true
+                })}
+            </TableCell>
             </TableRow>
         </TableBody>
         </Table>
@@ -73,18 +80,12 @@ return (
             </TableRow>
         </TableHeader>
         <TableBody>
-            <TableRow>
-            <TableCell>Pizza Pepperoni Família</TableCell>
-            <TableCell className="text-right">2</TableCell>
-            <TableCell className="text-right">R$ 69,90</TableCell>
-            <TableCell className="text-right">R$ 139,80</TableCell>
-            </TableRow>
-            <TableRow>
-            <TableCell>Pizza Mussarela Família</TableCell>
-            <TableCell className="text-right">2</TableCell>
-            <TableCell className="text-right">R$ 59,90</TableCell>
-            <TableCell className="text-right">R$ 119,80</TableCell>
-            </TableRow>
+                <TableRow>
+                    <TableCell>Pizza</TableCell>
+                    <TableCell className="text-right">2</TableCell>
+                    <TableCell className="text-right">R$ 69,90</TableCell>
+                    <TableCell className="text-right">R$ 139,80</TableCell>
+                </TableRow>
         </TableBody>
         <TableFooter>
             <TableRow>

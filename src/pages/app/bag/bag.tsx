@@ -2,21 +2,23 @@ import { BagProduct } from "@/components/bag-product";
 import { api } from "@/services/api";
 import { useEffect, useState } from "react";
 
-interface ProductItem {
-    pedidoId: number;
-    produtoId: number;
-    clienteId: number;
-    produtoValor: number;
-    quantidade: number;
-    total: number;
-    produtoNome: string;
-    clienteNome: string;
-    imagemUrl: string;
+export interface ProductItemProps {
+    produto: {
+        pedidoId: number;
+        produtoId: number;
+        clienteId: number;
+        produtoValor: number;
+        quantidade: number;
+        total: number;
+        produtoNome: string;
+        clienteNome: string;
+        imagemUrl: string;
+    }
 }
 
 export function Bag() {
 
-    const [produtos, setProdutos] = useState<ProductItem[]>([]);
+    const [produtos, setProdutos] = useState<ProductItemProps['produto'][]>([]);
     const clienteId = 1;
 
     useEffect(() => {
@@ -34,8 +36,8 @@ export function Bag() {
             {produtos.length === 0 ? (
                 <p>O carrinho está vazio</p>
             ) : (
-                produtos.map(produto => (
-                    <BagProduct key={produto.produtoId} produto={produto} />
+                produtos.map(item => (
+                    <BagProduct key={item.produtoId} produto={item} />
                 ))
             )}
         </div>
