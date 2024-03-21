@@ -1,41 +1,56 @@
-import { api } from '@/services/api'
-
-import {useState} from 'react'
-
 import { Button } from '@/components/ui/button'
-import { Link, useNavigate } from 'react-router-dom'
-
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Helmet } from 'react-helmet-async'
+import { useMutation } from '@tanstack/react-query'
+import { signIn } from '@/api/sign-in'
+import { z } from 'zod'
+import { toast } from 'sonner'
+import Cookies from 'js-cookie';
 
+const signInForm = z.object({
+    email: z.string().email(),
+    senha: z.string(),
+})
+  
+type SignInForm = z.infer<typeof signInForm>
 
 export function SignIn(){
-
-    const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
+    const [searchParams] = useSearchParams()
 
     const navigate = useNavigate();
 
-    async function login(event: React.FormEvent<HTMLFormElement>) {
+    const {
+      register,
+      handleSubmit,
+      formState: { isSubmitting },
+    } = useForm<SignInForm>({
+      defaultValues: {
+        email: searchParams.get('email') ?? '',
+      },
+    })
 
-        event.preventDefault();
+    const {mutateAsync: authenticate } = useMutation({
+        mutationFn: signIn
+    })
 
-        const data = {
-            email, senha
-        };
+
+  async function handleSignIn(data: SignInForm) {
+    try {
+        const result = await authenticate({ email: data.email, senha: data.senha });
         
-        try {
-            const response = await api.post('api/login', data);
+        localStorage.setItem('email', data.email);
+        Cookies.set('token', result.data);
 
-            localStorage.setItem('email', email);
-            localStorage.setItem('token', response.data)
-            navigate('/')
-        }
-        catch(error) {
-            alert('login falhou' + (error))
-        }
+        navigate('/')
+
+        toast.success('Bem vindo!')
+    } catch (error) {
+      toast.error('Credenciais inválidas.')
     }
+  }
 
     return(
         <>
@@ -56,14 +71,13 @@ export function SignIn(){
                         </p>
                     </div>
                 </div>
-                <form onSubmit={login} className='space-y-4'>
+                <form  onSubmit={handleSubmit(handleSignIn)} className='space-y-4'>
                     <div className='space-y-2'>
                         <Label htmlFor='email'>Seu e-mail</Label>
                         <Input 
                             id='email' 
                             type='email'
-                            value={email}
-                            onChange={e=>setEmail(e.target.value)}
+                            {...register('email')} 
                         />
                     </div>
                     <div className='space-y-2'>
@@ -71,12 +85,11 @@ export function SignIn(){
                         <Input 
                             id='senha' 
                             type='password'
-                            value={senha}
-                            onChange={e=>setSenha(e.target.value)}
+                            {...register('senha')} 
                         />
                     </div>
 
-                    <Button type='submit' className='w-full'>
+                    <Button disabled={isSubmitting}  className='w-full'>
                         Acessar painel
                     </Button>
                 </form>

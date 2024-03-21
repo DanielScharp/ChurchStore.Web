@@ -1,5 +1,5 @@
 import { ProductProps } from "@/pages/app/buys/buy";
-import { api } from "@/services/api";
+import { api } from "@/lib/axios";
 import { useState } from "react";
 
 export function Product({ produto }: ProductProps) {
@@ -17,7 +17,7 @@ export function Product({ produto }: ProductProps) {
 
     function AdicionarNaSacola(){
         if(quantidade > 0){
-            api.post(`api/Pedidos/itens/adicionar?clienteId=1&produtoId=${produto.produtoId}&quantidade=${quantidade}`).then(
+            api.post(`Pedidos/itens/adicionar?clienteId=1&produtoId=${produto.produtoId}&quantidade=${quantidade}`).then(
                 response => {
                     alert(`${produto.produtoNome} foi adicionado no carrinho!`)
                     setQuantidade(0)

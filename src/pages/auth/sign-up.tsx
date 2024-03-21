@@ -1,50 +1,68 @@
+import { registerUser } from '@/api/register'
 import { Button } from '@/components/ui/button'
 
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { api } from '@/services/api'
-import { useState } from 'react'
+import { useMutation } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
+import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
+import { z } from 'zod'
 
+const signUpForm = z.object({
+    nome: z.string(),
+    email: z.string(),
+    senha: z.string(),
+    confirmarSenha: z.string().email(),
+})
+
+type SignUpForm = z.infer<typeof signUpForm>
 
 export function SignUp(){
-    const [nome, setNome] = useState('');
-    const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
-    const [senhaConfirma, setSenhaConfirma] = useState('');
-
     const navigate = useNavigate();
 
-    async function cadastar(event: React.FormEvent<HTMLFormElement>) {
+    const {
+        register,
+        handleSubmit,
+        formState: { isSubmitting },
+    } = useForm<SignUpForm>()
 
-        event.preventDefault();
+    const { mutateAsync: registerUserFn } = useMutation({
+        mutationFn: registerUser
+    })
 
-        if(nome.length > 45){
-            alert("O seu nome é muito grande! Por gentileza, reduza para no máximo 45 caracteres.")
-            return false;
-        }
-        if(email.length > 45){
-            alert("O seu email é muito grande! Por gentileza, reduza para no máximo 45 caracteres.")
-            return false;
-        }
-        if(senha != senhaConfirma){
-            alert("As senhas não conferem.")
-            return false;
-        }
-        
-        
-        const data = {
-            nome, email, senha
-        };
-        
+    async function handleSignUp(data: SignUpForm) {
         try {
-            await api.post('api/usuarios/cadastrar', data);
+            if(data.nome.length > 45){
+                toast.error('O seu nome é muito grande! Por gentileza, abrevie algum sobrenome.')
+                return false;
+            }
+            if(data.email.length > 45){
+                toast.error('O seu email é muito grande! Tente outro email.')
+                return false;
+            }
+            if(data.senha !== data.confirmarSenha){
+                toast.error('As senhas não conferem.')
+                return false;
+            }
+
+            await registerUserFn({
+                nome: data.nome,
+                email: data.email,
+                senha: data.senha,
+            })
             
-            navigate('/sign-in')
+
+            toast.success('Cadastro realizado com sucesso!', {
+                action: {
+                    label: 'Login',
+                    onClick: () => navigate(`/sign-in?email=${data.email}`)
+                }
+            })
         }
-        catch(error) {
-            alert('o cadastro falhou ' + (error))
+        catch {
+            toast.error('Erro ao realizar o cadastro.')
         }
     }
 
@@ -67,14 +85,13 @@ export function SignUp(){
                         </p>
                     </div>
                 </div>
-                <form onSubmit={cadastar} className='space-y-4'>
+                <form onSubmit={handleSubmit(handleSignUp)} className='space-y-4'>
                     <div className='space-y-2'>
                         <Label htmlFor='nome'>Nome completo</Label>
                         <Input 
                             id='nome' 
                             type='text' 
-                            value={nome}
-                            onChange={e=>setNome(e.target.value)}
+                            {...register('nome')}
                         />
                     </div>
                     <div className='space-y-2'>
@@ -82,8 +99,8 @@ export function SignUp(){
                         <Input
                             id='email' 
                             type='email' 
-                            value={email}
-                            onChange={e=>setEmail(e.target.value)}
+                            {...register('email')}
+
                         />
                     </div>
                     <div className='space-y-2'>
@@ -91,8 +108,8 @@ export function SignUp(){
                         <Input 
                             id='senha' 
                             type='password' 
-                            value={senha}
-                            onChange={e=>setSenha(e.target.value)}
+                            
+                            {...register('senha')}
                         />
                     </div>
                     <div className='space-y-2'>
@@ -100,12 +117,11 @@ export function SignUp(){
                         <Input 
                             id='senhaConfirma' 
                             type='password' 
-                            value={senhaConfirma}
-                            onChange={e=>setSenhaConfirma(e.target.value)}
+                            {...register('confirmarSenha')}
                         />
                     </div>
 
-                    <Button type='submit' className='w-full'>
+                    <Button disabled={isSubmitting} className='w-full'>
                         Finalizar cadastro
                     </Button>
 

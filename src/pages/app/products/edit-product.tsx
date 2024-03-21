@@ -7,7 +7,7 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { api } from '@/services/api';
+import { api } from '@/lib/axios';
 import { Label } from '@radix-ui/react-label';
 import { useState } from 'react';
 
@@ -32,7 +32,7 @@ export function EditProduct({ produto }: ProductProps) {
         
          // Convertendo o valor de vírgula para ponto antes de enviar para a API
         const produtoAlterParaAPI = { ...produtoAlter, produtoValor: parseFloat(produtoAlter.produtoValor.toString().replace(',', '.')) };
-        api.post(`api/Produtos/alterar`, produtoAlterParaAPI).then(
+        api.post(`Produtos/alterar`, produtoAlterParaAPI).then(
             response => {
                 location.reload();
             }

@@ -1,10 +1,10 @@
 import { ProductItemProps } from "@/pages/app/bag/bag";
-import { api } from "@/services/api";
+import { api } from "@/lib/axios";
 import { Trash2 } from "lucide-react";
 
 export function BagProduct({ produto }: ProductItemProps) {
     function deleteOrderItem(){
-        api.post(`api/Pedidos/itens/remover?clienteId=${produto.clienteId}&produtoId=${produto.produtoId}&pedidoId=${produto.pedidoId}`).then(
+        api.post(`Pedidos/itens/remover?clienteId=${produto.clienteId}&produtoId=${produto.produtoId}&pedidoId=${produto.pedidoId}`).then(
             response => {
                 if(response){
                     alert(`${produto.produtoNome} foi removido do carrinho!`)

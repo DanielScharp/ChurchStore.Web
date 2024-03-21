@@ -1,4 +1,4 @@
-import { api } from '@/services/api'
+import { api } from '@/lib/axios'
 
 import { Helmet } from 'react-helmet-async'
 import { MonthRevenueCard } from './month-revenue-card'

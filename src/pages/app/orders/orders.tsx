@@ -4,7 +4,7 @@ import { OrderTableRow } from "./order-table-row";
 import { OrderTableFilters } from "./order-table-filters";
 import { Pagination } from "@/components/pagination";
 import { useEffect, useState } from "react";
-import { api } from "@/services/api";
+import { api } from "@/lib/axios";
 
 export function Orders() {
 
@@ -20,7 +20,7 @@ export function Orders() {
     }
 
     useEffect(() => {
-        api.get('api/Pedidos/Listar', authorization).then(
+        api.get('Pedidos/Listar', authorization).then(
             response => {
                 setPedidos(response.data);
             }

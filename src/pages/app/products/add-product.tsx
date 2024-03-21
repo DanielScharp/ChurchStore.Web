@@ -1,7 +1,7 @@
 import { AdminProduct } from "@/components/admin-product";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { api } from "@/services/api";
+import { api } from "@/lib/axios";
 import { useEffect, useState } from "react";
 
 interface Produto {
@@ -26,7 +26,7 @@ export function AddProduct() {
         
     });
     useEffect(() => {
-        api.get('api/Produtos/Listar?publico=false').then(
+        api.get('Produtos/Listar?publico=false').then(
             response => {
                 setProdutos(response.data);
             }
@@ -38,7 +38,7 @@ export function AddProduct() {
     function addProduct(){
         const produto = { ...newProduct, produtoValor: parseFloat(newProduct.produtoValor.toString().replace(',', '.')) };
 
-        api.post('api/Produtos/adicionar', produto).then(
+        api.post('Produtos/adicionar', produto).then(
             response => {
                 setProdutos([...produtos, response.data]);
             }

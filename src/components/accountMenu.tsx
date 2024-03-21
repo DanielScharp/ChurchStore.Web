@@ -2,14 +2,18 @@ import { Building, ChevronDown, LogOut } from "lucide-react";
 import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getProfile } from "@/api/get-profile";
 
 export function AccountMenu(){
+    const { data: profile } = useQuery({
+        queryKey: ['profile'],
+        queryFn: getProfile,
+      })
+
     const navigate = useNavigate();
 
     async function Disconnect() {
-        localStorage.removeItem('token')
-        localStorage.removeItem('email')
-
         navigate('/sign-in')
     }
 

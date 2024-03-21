@@ -1,5 +1,5 @@
 import { BagProduct } from "@/components/bag-product";
-import { api } from "@/services/api";
+import { api } from "@/lib/axios";
 import { useEffect, useState } from "react";
 
 export interface ProductItemProps {
@@ -22,7 +22,7 @@ export function Bag() {
     const clienteId = 1;
 
     useEffect(() => {
-        api.get(`api/Pedidos/itens/Listar?clienteId=${clienteId}`).then(
+        api.get(`Pedidos/itens/Listar?clienteId=${clienteId}`).then(
             response => {
                 setProdutos(response.data);
             }
