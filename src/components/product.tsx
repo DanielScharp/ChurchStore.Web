@@ -52,17 +52,17 @@ export function Product({ produto }: ProductProps) {
                 <div className="flex items-baseline mt-2">
                     <div className="w-full flex flex-row gap-2 text-sm justify-between items-start">
                         <div className="flex gap-2">
-                            <div onClick={SubtrairQuantidade} className="w-8 lg:w-9 h-8 lg:h-9  rounded-lg flex items-center justify-center text-zinc-100 bg-zinc-500 dark:bg-zinc-700 cursor-pointer">
+                            <div onClick={SubtrairQuantidade} className="w-8 lg:w-9 h-8 lg:h-9  rounded-lg flex items-center justify-center  bg-primary text-zinc-50 cursor-pointer">
                                 -
                             </div>
-                            <div className="w-8 lg:w-9 h-8 lg:h-9 rounded-lg flex items-center justify-center text-zinc-100  bg-zinc-500 dark:bg-zinc-700 ">
+                            <div className="w-8 lg:w-9 h-8 lg:h-9 rounded-lg flex items-center justify-center bg-primary text-zinc-50">
                                 {quantidade}
                             </div>
-                            <div onClick={AdicionarQuantidade} className="w-8 lg:w-9 h-8 lg:h-9 rounded-lg flex items-center justify-center text-zinc-100  bg-zinc-500 dark:bg-zinc-700 cursor-pointer">
+                            <div onClick={AdicionarQuantidade} className="w-8 lg:w-9 h-8 lg:h-9 rounded-lg flex items-center justify-center  bg-primary text-zinc-50 cursor-pointer">
                                 +
                             </div>
                         </div>
-                        <div onClick={AdicionarNaSacola} className="h-8 lg:h-9 px-3 lg:px-6 lg:text-base font-semibold rounded-md flex items-center justify-center  bg-zinc-500 text-white dark:bg-zinc-700 cursor-pointer">
+                        <div onClick={AdicionarNaSacola} className="h-8 lg:h-9 px-3 lg:px-6 lg:text-base font-semibold rounded-md flex items-center justify-center   bg-primary text-zinc-50 cursor-pointer">
                             Reservar
                         </div>
                     </div>

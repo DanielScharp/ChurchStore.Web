@@ -1,5 +1,6 @@
 import { getMenu } from "@/api/get-menu";
 import { Product } from "@/components/product";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@tanstack/react-query";
 
 
@@ -19,7 +20,7 @@ export function Buy() {
         queryFn: getMenu,
       })
 
-      if (isLoading) return <div>Carregando...</div>;
+      if (isLoading) return <Skeleton className="h-36 w-1/2 p-11" />;
       if (isError) return <div>Ocorreu um erro ao buscar os dados</div>;
   
 
