@@ -11,7 +11,7 @@ import { toast } from 'sonner'
 import Cookies from 'js-cookie';
 
 const signInForm = z.object({
-    email: z.string().email(),
+    telefone: z.string(),
     senha: z.string(),
 })
   
@@ -28,7 +28,7 @@ export function SignIn(){
       formState: { isSubmitting },
     } = useForm<SignInForm>({
       defaultValues: {
-        email: searchParams.get('email') ?? '',
+        telefone: searchParams.get('telefone') ?? '',
       },
     })
 
@@ -39,9 +39,9 @@ export function SignIn(){
 
   async function handleSignIn(data: SignInForm) {
     try {
-        const result = await authenticate({ email: data.email, senha: data.senha });
+        const result = await authenticate({ telefone: data.telefone, senha: data.senha });
         
-        localStorage.setItem('email', data.email);
+        localStorage.setItem('telefone', data.telefone);
         Cookies.set('token', result.data);
 
         navigate('/')
@@ -73,11 +73,11 @@ export function SignIn(){
                 </div>
                 <form  onSubmit={handleSubmit(handleSignIn)} className='space-y-4'>
                     <div className='space-y-2'>
-                        <Label htmlFor='email'>Seu e-mail</Label>
+                        <Label htmlFor='telefone'>Seu e-mail</Label>
                         <Input 
-                            id='email' 
-                            type='email'
-                            {...register('email')} 
+                            id='telefone' 
+                            type='telefone'
+                            {...register('telefone')} 
                         />
                     </div>
                     <div className='space-y-2'>

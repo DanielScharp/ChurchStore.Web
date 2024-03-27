@@ -43,7 +43,7 @@ export function AccountMenu() {
                                     {profile?.nome}   
                                 </span>
                                 <span className="text-xs font-normal text-muted-foreground">
-                                    {profile?.email}
+                                    {profile?.telefone}
                                 </span>
                                 </>
                         )}

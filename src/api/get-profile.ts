@@ -2,14 +2,14 @@ import { api } from "@/lib/axios";
 import { token } from "./get-token";
 
 interface GetProfileResponse {
-    usuarioId: Number
+    usuarioId: string
     nome: string
-    email: string
+    telefone: string
 }
 
 export async function getProfile() {
-    const email = localStorage.getItem('email')
-    const response = await api.get<GetProfileResponse>(`/Usuarios/retornar?email=${email}`, {
+    const telefone = localStorage.getItem('telefone')
+    const response = await api.get<GetProfileResponse>(`/Usuarios/retornar?telefone=${telefone}`, {
         headers: {
             Authorization: `Bearer ${token}`
         }

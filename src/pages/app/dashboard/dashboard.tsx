@@ -12,7 +12,7 @@ import { useEffect } from 'react'
 
 export function Dashboard(){
 
-    const email = localStorage.getItem('email');
+    const telefone = localStorage.getItem('telefone');
     const token = localStorage.getItem('token');
 
     const authorization = {

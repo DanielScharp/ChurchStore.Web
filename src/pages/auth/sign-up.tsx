@@ -12,9 +12,9 @@ import { z } from 'zod'
 
 const signUpForm = z.object({
     nome: z.string(),
-    email: z.string(),
+    telefone: z.string(),
     senha: z.string(),
-    confirmarSenha: z.string().email(),
+    confirmarSenha: z.string(),
 })
 
 type SignUpForm = z.infer<typeof signUpForm>
@@ -38,8 +38,8 @@ export function SignUp(){
                 toast.error('O seu nome é muito grande! Por gentileza, abrevie algum sobrenome.')
                 return false;
             }
-            if(data.email.length > 45){
-                toast.error('O seu email é muito grande! Tente outro email.')
+            if(data.telefone.length > 45){
+                toast.error('O seu telefone é muito grande! Tente outro telefone.')
                 return false;
             }
             if(data.senha !== data.confirmarSenha){
@@ -49,7 +49,7 @@ export function SignUp(){
 
             await registerUserFn({
                 nome: data.nome,
-                email: data.email,
+                telefone: data.telefone,
                 senha: data.senha,
             })
             
@@ -57,7 +57,7 @@ export function SignUp(){
             toast.success('Cadastro realizado com sucesso!', {
                 action: {
                     label: 'Login',
-                    onClick: () => navigate(`/sign-in?email=${data.email}`)
+                    onClick: () => navigate(`/sign-in?telefone=${data.telefone}`)
                 }
             })
         }
@@ -95,11 +95,11 @@ export function SignUp(){
                         />
                     </div>
                     <div className='space-y-2'>
-                        <Label htmlFor='email'>Seu e-mail</Label>
+                        <Label htmlFor='telefone'>Seu e-mail</Label>
                         <Input
-                            id='email' 
-                            type='email' 
-                            {...register('email')}
+                            id='telefone' 
+                            type='telefone' 
+                            {...register('telefone')}
 
                         />
                     </div>
