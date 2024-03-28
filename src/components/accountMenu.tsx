@@ -18,6 +18,7 @@ export function AccountMenu() {
     const navigate = useNavigate();
 
     async function Disconnect() {
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         navigate('/sign-in')
     }
 

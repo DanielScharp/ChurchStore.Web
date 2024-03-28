@@ -1,5 +1,5 @@
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
-import { DialogContent, DialogFooter, DialogHeader } from "./ui/dialog";
+import { DialogClose, DialogContent, DialogFooter, DialogHeader } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
@@ -44,6 +44,7 @@ export function ProfileDialog() {
 
     })
 
+    
     async function handleUpdateProfile(data: ProfileSchema) {
         try {
             console.log("ok")
@@ -92,7 +93,14 @@ export function ProfileDialog() {
 
                 </div>
                 <DialogFooter>
-                    <Button type="submit" variant={"default"} disabled={isSubmitting}>Salvar</Button>
+                    <DialogClose asChild>
+                        <Button variant="ghost" type="button">
+                        Cancelar
+                        </Button>
+                    </DialogClose>
+                    <Button type="submit" variant="default" disabled={isSubmitting}>
+                        Salvar
+                    </Button>
                 </DialogFooter>
             </form>
         </DialogContent>

@@ -1,35 +1,16 @@
-import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Helmet } from "react-helmet-async";
-import { OrderTableRow } from "./order-table-row";
-import { OrderTableFilters } from "./order-table-filters";
+import { getOrders } from "@/api/get-ordes";
 import { Pagination } from "@/components/pagination";
-import { useEffect, useState } from "react";
-import { api } from "@/lib/axios";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useQuery } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
+import { OrderTableFilters } from "./order-table-filters";
+import { OrderTableRow } from "./order-table-row";
 
 export function Orders() {
-
-    
-    const [pedidos, setPedidos] = useState([]);
-
-    const token = localStorage.getItem('token');
-
-    const authorization = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
-
-    useEffect(() => {
-        api.get('Pedidos/Listar', authorization).then(
-            response => {
-                setPedidos(response.data);
-            }
-        ).catch(error => {
-            // Tratar o erro, se necessário
-            console.error('Erro ao buscar pedidos:', error);
-        });
-    }, []);
-
+    const { data: pedidos} = useQuery({
+        queryKey: ['pedidos'],
+        queryFn: getOrders,
+    })
 
     return (
         <>
@@ -53,11 +34,13 @@ export function Orders() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {
-                                    pedidos.map(pedido => (
-                                        <OrderTableRow key={pedido} order={pedido} />
+                                {pedidos && pedidos.length > 0 ? (
+                                    pedidos.map(itemMenu => (
+                                        <OrderTableRow key={itemMenu.pedidoId} order={itemMenu} />
                                     ))
-                                }
+                                ) : (
+                                    <p>Nenhum produto foi adicionado.</p>
+                                )}
                             </TableBody>
                         </Table>
                     </div>
