@@ -39,7 +39,11 @@ export function Orders() {
                                         <OrderTableRow key={itemMenu.pedidoId} order={itemMenu} />
                                     ))
                                 ) : (
-                                    <p>Nenhum produto foi adicionado.</p>
+                                    <tr>
+                                        <td>
+                                            <p>Nenhum produto foi adicionado.</p>
+                                        </td>
+                                    </tr>
                                 )}
                             </TableBody>
                         </Table>

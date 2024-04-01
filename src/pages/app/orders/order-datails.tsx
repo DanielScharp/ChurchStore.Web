@@ -1,3 +1,4 @@
+import { getOrderDetails } from '@/api/get-order-details'
 import { OrderStatus } from '@/components/order-status'
 import {
     DialogContent,
@@ -14,11 +15,9 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
-import { api } from '@/lib/axios'
+import { useQuery } from '@tanstack/react-query'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { useEffect, useState } from 'react'
-import { ProductItemProps } from '../bag/bag'
 
 export interface OrderTableRowProps {
     order: {
@@ -32,22 +31,13 @@ export interface OrderTableRowProps {
     open: boolean
 }
 
-export function OrderDetails({order}: OrderTableRowProps, {open}: OrderTableRowProps) {
+export function OrderDetails({order, open}: OrderTableRowProps) {
 
-    const [itens, setItens] = useState<ProductItemProps['produto'][]>([])
-
-    if(open){
-        useEffect(() => {
-            api.get(`Pedidos/itens/listar-pedidoId?pedidoId=${order.pedidoId}`).then(
-                response => {
-                    setItens(response.data)
-                }
-            ).catch(error => {
-                console.error('Erro ao buscar produtos:', error);
-            });
-        }, []);
-    }
-    
+    const {data: result} = useQuery({
+        queryKey: ['order', order.pedidoId],
+        queryFn: () => getOrderDetails(order.pedidoId), 
+        enabled: open,
+    })
 
 
 return (
@@ -110,12 +100,12 @@ return (
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {itens.map(item => (
-                        <TableRow>
+                    {result?.map((item) => (
+                        <TableRow key={item.produtoId}>
                             <TableCell>{item.produtoNome}</TableCell>
-                            <TableCell className="text-right">2</TableCell>
-                            <TableCell className="text-right">R$ 69,90</TableCell>
-                            <TableCell className="text-right">R$ 139,80</TableCell>
+                            <TableCell className="text-right">{item.quantidade}</TableCell>
+                            <TableCell className="text-right">{item.produtoValor}</TableCell>
+                            <TableCell className="text-right">{item.produtoValor * item.quantidade}</TableCell>
                         </TableRow>
                     ))}
                         

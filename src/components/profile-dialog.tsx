@@ -44,7 +44,6 @@ export function ProfileDialog() {
 
     })
 
-    
     async function handleUpdateProfile(data: ProfileSchema) {
         try {
             console.log("ok")
