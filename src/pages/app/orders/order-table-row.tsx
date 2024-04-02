@@ -38,9 +38,9 @@ export function OrderTableRow({ order }: OrderTableRowProps){
                 statusId: status,
             }) 
 
-            toast.success('Pedido cancelado com sucesso!')
+            toast.success('Pedido atualizado com sucesso!')
         } catch {
-            toast.error('Falha ao cancelar pedido, tente novamente!')
+            toast.error('Falha ao atualizar pedido, tente novamente!')
         }
     }
     return(
