@@ -1,4 +1,4 @@
-import { getOrders } from "@/api/get-ordes";
+import { getOrders } from "@/api/get-orders";
 import { Pagination } from "@/components/pagination";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useQuery } from "@tanstack/react-query";
@@ -40,7 +40,7 @@ export function Orders() {
                                     ))
                                 ) : (
                                     <tr>
-                                        <td>
+                                        <td colSpan={8} className="text-center p-4">
                                             <p>Nenhum produto foi adicionado.</p>
                                         </td>
                                     </tr>

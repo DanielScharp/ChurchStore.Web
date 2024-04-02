@@ -1,4 +1,4 @@
-type OrderStatus = 'Pendente' | 'Aprovado' | 'Cancelado' 
+type OrderStatus = 'Pendente' | 'Pago' | 'Cancelado' | 'Entregue' 
 
 interface OrderStatusProps {
     status: OrderStatus
@@ -12,7 +12,12 @@ export function OrderStatus({ status }: OrderStatusProps) {
                     <span className="h-2 w-2 rounded-full bg-slate-400" />
                 )
             }
-            {status === 'Aprovado' && 
+            {status === 'Pago' && 
+                (
+                    <span className="h-2 w-2 rounded-full bg-blue-500" />
+                )
+            }
+            {status === 'Entregue' && 
                 (
                     <span className="h-2 w-2 rounded-full bg-emerald-500" />
                 )

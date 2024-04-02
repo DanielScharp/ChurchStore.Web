@@ -8,13 +8,16 @@ import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { OrderStatus } from "@/components/order-status";
 import { useState } from "react";
+import { useMutation} from "@tanstack/react-query";
+import { updateStatus } from "@/api/update-status";
+import { toast } from "sonner";
 
 export interface OrderTableRowProps {
     order: {
         pedidoId: number
         clienteId: number
         clienteNome: string
-        statusNome: 'Pendente' | 'Aprovado' | 'Cancelado' 
+        statusNome: 'Pendente' | 'Pago' | 'Cancelado' | 'Entregue'
         pedidoData: string
         pedidoValor: number
     }
@@ -24,6 +27,22 @@ export function OrderTableRow({ order }: OrderTableRowProps){
     
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
+    const {mutateAsync: updateStatusFn} = useMutation({
+        mutationFn: updateStatus,
+    })
+
+    async function handleStatusOrder(status:number) {
+        try {
+            await updateStatusFn({
+                pedidoId: order.pedidoId,
+                statusId: status,
+            }) 
+
+            toast.success('Pedido cancelado com sucesso!')
+        } catch {
+            toast.error('Falha ao cancelar pedido, tente novamente!')
+        }
+    }
     return(
         <TableRow>
             <TableCell>
@@ -60,13 +79,20 @@ export function OrderTableRow({ order }: OrderTableRowProps){
                 })}
             </TableCell>
             <TableCell>
-                <Button variant="outline" size="xs">
-                    <ArrowRight className="mr-2 h-3 w-3" />
-                    Aprovar
-                </Button>
+                {
+                    order.statusNome == 'Pendente' ?
+                    <Button variant="outline" size="xs" onClick={() => handleStatusOrder(2)}>
+                        <ArrowRight className="mr-2 h-3 w-3" />
+                        Pago
+                    </Button> :
+                    <Button variant="outline" size="xs" onClick={() => handleStatusOrder(3)}>
+                        <ArrowRight className="mr-2 h-3 w-3" />
+                        Entregue
+                    </Button>
+                }
             </TableCell>
             <TableCell>
-                <Button variant="ghost" size="xs">
+                <Button variant="destructive" size="xs" onClick={() => handleStatusOrder(4)}>
                     <X className="mr-2 h-3 w-3" />
                     Cancelar
                 </Button>

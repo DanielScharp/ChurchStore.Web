@@ -41,12 +41,10 @@ export function ProfileDialog() {
 
     const {mutateAsync: updateProfileFn} = useMutation({
         mutationFn: updateProfile,
-
     })
 
     async function handleUpdateProfile(data: ProfileSchema) {
         try {
-            console.log("ok")
             await updateProfileFn({
                 usuarioId: parseInt(data.usuarioId),
                 nome: data.nome,

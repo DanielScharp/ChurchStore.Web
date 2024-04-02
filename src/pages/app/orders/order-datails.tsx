@@ -24,7 +24,7 @@ export interface OrderTableRowProps {
         pedidoId: number
         clienteId: number
         clienteNome: string
-        statusNome: 'Pendente' | 'Aprovado' | 'Cancelado' 
+        statusNome: 'Pendente' | 'Pago' | 'Cancelado' | 'Entregue' 
         pedidoData: string
         pedidoValor: number
     },
@@ -104,8 +104,18 @@ return (
                         <TableRow key={item.produtoId}>
                             <TableCell>{item.produtoNome}</TableCell>
                             <TableCell className="text-right">{item.quantidade}</TableCell>
-                            <TableCell className="text-right">{item.produtoValor}</TableCell>
-                            <TableCell className="text-right">{item.produtoValor * item.quantidade}</TableCell>
+                            <TableCell className="text-right">
+                                {item.produtoValor.toLocaleString('pt-BR', {
+                                    style: 'currency',
+                                    currency: 'BRL'
+                                })}
+                            </TableCell>
+                            <TableCell className="text-right">
+                                {(item.produtoValor * item.quantidade).toLocaleString('pt-BR', {
+                                    style: 'currency',
+                                    currency: 'BRL'
+                                })}
+                            </TableCell>
                         </TableRow>
                     ))}
                         

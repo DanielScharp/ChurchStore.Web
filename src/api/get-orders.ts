@@ -4,7 +4,7 @@ export interface GetOrdersResponse {
   pedidoId: number
   clienteId: number
   clienteNome: string
-  statusNome: 'Pendente' | 'Aprovado' | 'Cancelado' 
+  statusNome: 'Pendente' | 'Pago' | 'Cancelado' | 'Entregue' 
   pedidoData: string
   pedidoValor: number
   
