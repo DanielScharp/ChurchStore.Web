@@ -24,12 +24,19 @@ export interface OrderTableRowProps {
         pedidoId: number
         clienteId: number
         clienteNome: string
-        statusNome: 'Pendente' | 'Pago' | 'Cancelado' | 'Entregue' 
+        clienteTel: string
+        statusNome: string
         pedidoData: string
         pedidoValor: number
     },
     open: boolean
 }
+
+interface OrderItem {
+    produtoValor: number;
+    quantidade: number;
+}
+
 
 export function OrderDetails({order, open}: OrderTableRowProps) {
 
@@ -39,6 +46,17 @@ export function OrderDetails({order, open}: OrderTableRowProps) {
         enabled: open,
     })
 
+    const calculateSubtotal = (item: OrderItem) => {
+        return item.produtoValor * item.quantidade;
+    };
+
+    // Calculando o total do pedido somando os subtotais de todos os itens
+    const calculateTotal = () => {
+        if (result) {
+            return result.reduce((acc, item) => acc + calculateSubtotal(item), 0);
+        }
+        return 0;
+    };
 
 return (
     <DialogContent>
@@ -67,13 +85,7 @@ return (
                     <TableRow>
                     <TableCell className="text-muted-foreground">Telefone</TableCell>
                     <TableCell className="flex justify-end">
-                        (11) 99999-9999
-                    </TableCell>
-                    </TableRow>
-                    <TableRow>
-                    <TableCell className="text-muted-foreground">E-mail</TableCell>
-                    <TableCell className="flex justify-end">
-                        diego@rocketseat.com.br
+                        {order.clienteTel}
                     </TableCell>
                     </TableRow>
                     <TableRow>
@@ -121,13 +133,16 @@ return (
                         
                 </TableBody>
                 <TableFooter>
-                    <TableRow>
+                <TableRow>
                     <TableCell colSpan={3}>Total do pedido</TableCell>
                     <TableCell className="text-right font-medium">
-                        R$ 259,60
+                        {calculateTotal().toLocaleString('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL'
+                        })}
                     </TableCell>
-                    </TableRow>
-                </TableFooter>
+                </TableRow>
+            </TableFooter>
             </Table>
         </div>
     </DialogContent>

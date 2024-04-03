@@ -1,4 +1,4 @@
-type OrderStatus = 'Pendente' | 'Pago' | 'Cancelado' | 'Entregue' 
+type OrderStatus = string
 
 interface OrderStatusProps {
     status: OrderStatus

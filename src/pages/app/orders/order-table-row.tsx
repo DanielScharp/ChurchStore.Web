@@ -17,7 +17,7 @@ export interface OrderTableRowProps {
         pedidoId: number
         clienteId: number
         clienteNome: string
-        statusNome: 'Pendente' | 'Pago' | 'Cancelado' | 'Entregue'
+        statusNome: string
         pedidoData: string
         pedidoValor: number
     }
@@ -26,6 +26,7 @@ export interface OrderTableRowProps {
 export function OrderTableRow({ order }: OrderTableRowProps){
     
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+    const [isOrder, setIsOrder] = useState(order);
 
     const {mutateAsync: updateStatusFn} = useMutation({
         mutationFn: updateStatus,
@@ -33,6 +34,14 @@ export function OrderTableRow({ order }: OrderTableRowProps){
 
     async function handleStatusOrder(status:number) {
         try {
+
+            const updatedOrder = {
+                ...order,
+                statusNome: status === 2 ? "Pago" : status === 3 ? "Entregue" : "Cancelado"
+            };
+
+            setIsOrder(updatedOrder);
+
             await updateStatusFn({
                 pedidoId: order.pedidoId,
                 statusId: status,
@@ -53,34 +62,34 @@ export function OrderTableRow({ order }: OrderTableRowProps){
                             <span className="sr-only">Detalhes do pedido</span>
                         </Button>
                     </DialogTrigger>
-                    <OrderDetails order={order} open={isDetailsOpen} />
+                    <OrderDetails order={isOrder} open={isDetailsOpen} />
                 </Dialog>
             </TableCell>
             
             <TableCell className="font-mono text-xs font-medium">
-                {order.pedidoId}
+                {isOrder.pedidoId}
             </TableCell>
             <TableCell className="text-muted-foreground">
-                {formatDistanceToNow(order.pedidoData, {
+                {formatDistanceToNow(isOrder.pedidoData, {
                     locale: ptBR,
                     addSuffix: true
                 })}
             </TableCell>
             <TableCell>
-                <OrderStatus status={order.statusNome} />
+                <OrderStatus status={isOrder.statusNome} />
             </TableCell>
             <TableCell className="font-mediu">
-                {order.clienteNome}
+                {isOrder.clienteNome}
             </TableCell>
             <TableCell className="font-medium">
-                {order.pedidoValor.toLocaleString('pt-BR', {
+                {isOrder.pedidoValor.toLocaleString('pt-BR', {
                     style: 'currency',
                     currency: 'BRL'
                 })}
             </TableCell>
             <TableCell>
                 {
-                    order.statusNome == 'Pendente' ?
+                    isOrder.statusNome == 'Pendente' ?
                     <Button variant="outline" size="xs" onClick={() => handleStatusOrder(2)}>
                         <ArrowRight className="mr-2 h-3 w-3" />
                         Pago

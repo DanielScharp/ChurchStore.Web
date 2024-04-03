@@ -18,10 +18,10 @@ export function Buy() {
     const { data: menu, isLoading, isError } = useQuery({
         queryKey: ['menu'],
         queryFn: getMenu,
-      })
+    })
 
-      if (isLoading) return <Skeleton className="h-36 w-1/2 p-11" />;
-      if (isError) return <div>Ocorreu um erro ao buscar os dados</div>;
+    if (isLoading) return <Skeleton className="h-36 w-1/2 p-11" />;
+    if (isError) return <div>Ocorreu um erro ao buscar os dados</div>;
   
 
     return(

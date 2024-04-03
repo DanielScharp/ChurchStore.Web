@@ -1,6 +1,7 @@
 import { ProductProps } from "@/pages/app/buys/buy";
 import { api } from "@/lib/axios";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export function Product({ produto }: ProductProps) {
 
@@ -26,6 +27,9 @@ export function Product({ produto }: ProductProps) {
             ).catch(error => {
                 console.error('Erro ao buscar produtos:', error);
             });
+        }
+        else {
+            toast.error("Você não definiu a quantidade.")
         }
 
     }
