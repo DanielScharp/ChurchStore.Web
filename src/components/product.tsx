@@ -72,6 +72,7 @@ export function Product({ produto }: ProductProps) {
                     </div>
                 </div>
             </div>
+            
         </div>
     )
 }

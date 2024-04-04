@@ -10,6 +10,7 @@ import { Buy } from "./pages/app/buys/buy";
 import { ClientHeaderLayout } from "./pages/_layouts/client-header";
 import { Bag } from "./pages/app/bag/bag";
 import { AddProduct } from "./pages/app/products/add-product";
+import { Cashier } from "./pages/app/cashier/cashier";
 
 export const router = createBrowserRouter([
 
@@ -29,6 +30,7 @@ export const router = createBrowserRouter([
             {path: '/dashboard', element: <Dashboard />},
             {path: '/orders', element: <Orders />},
             {path: '/add/product', element: <AddProduct />},
+            {path: '/cashier', element: <Cashier />},
         ]
     },
     {
